@@ -1,45 +1,125 @@
-import React from "react";
+import React, { useRef } from "react";
 import Modal from "react-modal";
-import PdfPreviewer from "./PdfPreviewer";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+
+import PdfModal from "./PdfModal";
 
 function TransferCert() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  function closeModal() {
-    setIsOpen(false);
-  }
+
+  const inputTitle = [
+    {
+      name: "Serial No",
+      id: "SerialNo",
+    },
+    {
+      name: "Admission No",
+      id: "AdmissionNo",
+    },
+    {
+      name: "Date of Admission",
+      id: "DateOfAdmission",
+    },
+    {
+      name: "Name of the Pupil",
+      id: "NameOfThePupil",
+    },
+    {
+      name: "Name of the Father",
+      id: "NameOfTheFather",
+    },
+    {
+      name: "Nationality",
+      id: "Nationality",
+    },
+    {
+      name: "Caste of the Pupil",
+      id: "CasteOfThePupil",
+    },
+    {
+      name: "Date of Birth of the pupil according to the school record",
+      id: "DOB",
+    },
+    {
+      name: "Class passed or failed by the student",
+      id: "Remark",
+    },
+    {
+      name: "Class in which student was studying",
+      id: "Class",
+    },
+    {
+      name: "Medium of Instruction",
+      id: "Language",
+    },
+    {
+      name: "Whether qualified for promotion to a higher class",
+      id: "CanQualify",
+    },
+    {
+      name: "Month up to which the fees paid by the student",
+      id: "FeesPaid",
+    },
+    {
+      name: "General conduct of the student",
+      id: "Conduct",
+    },
+    {
+      name: "Reason for leaving the school",
+      id: "Reason",
+    },
+    {
+      name: "Date of issue of Transfer Certificate",
+      id: "DateOfIssue",
+    },
+    {
+      name: "Any other remarks",
+      id: "OtherRemarks",
+    },
+  ];
+
+  const formRef = useRef(null);
+
+  const handlePreviewClick = () => {
+    // Check if any of the form fields are empty
+    const formFields = Array.from(formRef.current.elements);
+    const isFormEmpty = formFields.some((field) => field.value.trim() === "");
+
+    if (!isFormEmpty) {
+      setIsOpen(true);
+    }
+  };
 
   return (
     <>
-      <button
-        className="bg-blue-600 text-white px-2 py-1 rounded-lg"
-        onClick={() => setIsOpen(true)}
-      >
-        Preview
-      </button>
-
-      <Modal isOpen={modalIsOpen} contentLabel="Example Modal">
-        <div className="flex flex-col">
-          {/* Close button */}
-          <button
-            className="absolute right-4 bg-red-500 text-white px-2 py-1 rounded-md"
-            onClick={closeModal}
-          >
-            Close
-          </button>
-
-          {/* Content */}
-          <PdfPreviewer />
-
-          {/* Download button */}
-          <PDFDownloadLink
-            className="bg-blue-500 self-center px-2 py-1 rounded-md"
-            document={<PdfPreviewer />}
-            fileName="transfer-certificate"
-          >
-            Download
-          </PDFDownloadLink>
+      <form action="#" ref={formRef} className="my-8">
+        {/* Input fields */}
+        <div className="input-fields  grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center">
+          {inputTitle.map((input) => (
+            <div key={input.id} className="w-4/5">
+              <label htmlFor={`#${input.id}`}>{input.name}:</label>
+              <input
+                type="text"
+                name={input.id}
+                id={input.id}
+                className="ml-2 border-2 rounded-lg border-gray-400 px-2"
+                required
+              />
+            </div>
+          ))}
         </div>
+
+        {/* Submit button */}
+        <button
+          className="bg-blue-600 text-white px-2 py-1 rounded-lg mx-auto block mt-12"
+          type="submit"
+          onClick={handlePreviewClick}
+        >
+          Preview
+        </button>
+      </form>
+
+      <Modal isOpen={modalIsOpen} contentLabel="Transfer Certificate">
+        <PdfModal closeModal={setIsOpen} formRef={formRef} />
       </Modal>
     </>
   );

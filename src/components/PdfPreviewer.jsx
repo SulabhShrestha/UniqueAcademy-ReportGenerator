@@ -1,6 +1,7 @@
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { useEffect } from "react";
 
-function PdfPreviewer() {
+function PdfPreviewer(props) {
   // Create styles
   const styles = StyleSheet.create({
     page: {
@@ -12,6 +13,10 @@ function PdfPreviewer() {
       padding: 10,
       flexGrow: 1,
     },
+  });
+
+  useEffect(() => {
+    console.log(props.formRef);
   });
   return (
     <Document>
