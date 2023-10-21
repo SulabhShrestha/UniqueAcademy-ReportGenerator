@@ -79,19 +79,29 @@ function TransferCert() {
 
   const formRef = useRef(null);
 
-  const handlePreviewClick = () => {
+  const handlePreviewClick = (e) => {
+    e.preventDefault();
+
+    console.log("inside");
     // Check if any of the form fields are empty
     const formFields = Array.from(formRef.current.elements);
-    const isFormEmpty = formFields.some((field) => field.value.trim() === "");
+    const shouldOpen = formFields
+      .slice(0, formFields.length - 1) // Exclude the submit button
+      .every((field) => {
+        console.log(field.value.length);
+        return field.value.trim().length > 0;
+      });
 
-    if (!isFormEmpty) {
+    if (shouldOpen) {
       setIsOpen(true);
+    } else {
+      alert("Please fill all the fields");
     }
   };
 
   return (
     <>
-      <form action="#" ref={formRef} className="my-8">
+      <form ref={formRef} className="my-8">
         {/* Input fields */}
         <div className="input-fields  grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center">
           {inputTitle.map((input) => (
