@@ -1,33 +1,26 @@
 import PdfPreviewer from "./PdfPreviewer";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import PureModal from "react-pure-modal";
+import "react-pure-modal/dist/react-pure-modal.min.css";
 
 function PdfModal(props) {
-  function closeModal() {
-    props.closeModal(false);
-  }
   return (
     <div className="flex flex-col">
-      {/* Close button */}
-      <button
-        className="absolute right-4 bg-red-500 text-white px-2 py-1 rounded-md"
-        onClick={closeModal}
+      <PureModal
+        header="Custom heading"
+        width="80vw"
+        className=""
+        scrollable={false}
+        isOpen={props.modal}
+        closeButton="close"
+        onClose={() => {
+          props.setModal(false);
+          return true;
+        }}
       >
-        Close
-      </button>
-
-      {/* Content */}
-      <PdfPreviewer formRef={props.formRef} />
-
-      {/* Download button */}
-      <PDFDownloadLink
-        className="bg-blue-500 self-center px-2 py-1 rounded-md"
-        document={<PdfPreviewer />}
-        fileName="transfer-certificate"
-      >
-        Download
-      </PDFDownloadLink>
+        {/* Content */}
+        <PdfPreviewer />
+      </PureModal>
     </div>
   );
 }
-
 export default PdfModal;

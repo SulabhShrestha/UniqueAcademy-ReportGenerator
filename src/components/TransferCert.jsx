@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
-import Modal from "react-modal";
-
+import React, { useContext, useEffect, useRef } from "react";
 import PdfModal from "./PdfModal";
+import { FormContext } from "../provider/formProvider";
+import { useState } from "react";
 
 function TransferCert() {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modal, setModal] = useState(false);
 
   const inputTitle = [
     {
@@ -78,11 +78,11 @@ function TransferCert() {
   ];
 
   const formRef = useRef(null);
+  const { setFormRef } = useContext(FormContext);
 
   const handlePreviewClick = (e) => {
     e.preventDefault();
 
-    console.log("inside");
     // Check if any of the form fields are empty
     const formFields = Array.from(formRef.current.elements);
     const shouldOpen = formFields
@@ -93,7 +93,8 @@ function TransferCert() {
       });
 
     if (shouldOpen) {
-      setIsOpen(true);
+      setFormRef(formRef);
+      setModal(true);
     } else {
       alert("Please fill all the fields");
     }
@@ -109,7 +110,7 @@ function TransferCert() {
               <label htmlFor={`#${input.id}`}>{input.name}:</label>
               <input
                 type="text"
-                name={input.id}
+                name={input.name}
                 id={input.id}
                 className="ml-2 border-2 rounded-lg border-gray-400 px-2"
                 required
@@ -126,11 +127,9 @@ function TransferCert() {
         >
           Preview
         </button>
-      </form>
 
-      <Modal isOpen={modalIsOpen} contentLabel="Transfer Certificate">
-        <PdfModal closeModal={setIsOpen} formRef={formRef} />
-      </Modal>
+        <PdfModal modal={modal} setModal={setModal} />
+      </form>
     </>
   );
 }
