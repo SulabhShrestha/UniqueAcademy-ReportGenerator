@@ -1,15 +1,23 @@
 import Header from "./components/Header";
+import ResultCert from "./components/ResultCert";
 import TransferCert from "./components/TransferCert";
 import FormProvider from "./provider/formProvider";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <FormProvider>
-      <Header />
-      <main>
-        <TransferCert />
-      </main>
-    </FormProvider>
+    <Router>
+      <FormProvider>
+        <Header />
+        <main>
+          <Routes>
+            <Route exact path="/" element={<TransferCert />} />
+            <Route exact path="/transfer" element={<TransferCert />} />
+            <Route exact path="/result" element={<ResultCert />} />
+          </Routes>
+        </main>
+      </FormProvider>
+    </Router>
   );
 }
 export default App;
