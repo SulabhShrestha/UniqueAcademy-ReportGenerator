@@ -9,7 +9,7 @@ function App() {
     <Router>
       <FormProvider>
         <Header />
-        <main>
+        <main className="max-w-screen-xl mx-auto">
           <Routes>
             <Route exact path="/" element={<TransferCert />} />
             <Route exact path="/transfer" element={<TransferCert />} />
