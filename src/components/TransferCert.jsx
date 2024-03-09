@@ -9,70 +9,87 @@ function TransferCert() {
   const inputTitle = [
     {
       name: "Serial No",
+      label: "Serial No",
       id: "SerialNo",
     },
     {
       name: "Admission No",
+      label: "Admission No",
       id: "AdmissionNo",
     },
     {
       name: "Date of Admission",
+      label: "Date of Admission",
       id: "DateOfAdmission",
     },
     {
       name: "Name of the Pupil",
+      label: "Pupil's Name",
       id: "NameOfThePupil",
     },
     {
       name: "Name of the Father",
+      label: "Father's Name",
       id: "NameOfTheFather",
     },
     {
       name: "Nationality",
+      label: "Nationality",
       id: "Nationality",
     },
     {
       name: "Caste of the Pupil",
+      label: "Pupil's Caste",
       id: "CasteOfThePupil",
     },
     {
       name: "Date of Birth of the pupil according to the school record",
+      label: "Date of Birth",
       id: "DOB",
     },
     {
       name: "Class passed or failed by the student",
+      label: 'Remark',
       id: "Remark",
     },
     {
       name: "Class in which student was studying",
+      label: "Class",
       id: "Class",
     },
     {
       name: "Medium of Instruction",
+      label: "Instruction Medium",
       id: "Language",
     },
     {
       name: "Whether qualified for promotion to a higher class",
+      label: "Qualified for Promotion",
       id: "CanQualify",
     },
     {
       name: "Month up to which the fees paid by the student",
+      label: "Fees Paid Upto Month",
       id: "FeesPaid",
     },
     {
       name: "General conduct of the student",
+      label: "Student Behaviour",
       id: "Conduct",
     },
     {
       name: "Reason for leaving the school",
+      label: "Reason for Leaving",
       id: "Reason",
     },
     {
       name: "Date of issue of Transfer Certificate",
+      label: "Date of Issue",
       id: "DateOfIssue",
     },
     {
       name: "Any other remarks",
+      label: "Other Remarks",
       id: "OtherRemarks",
     },
   ];
@@ -104,15 +121,19 @@ function TransferCert() {
     <>
       <form ref={formRef} className="my-8">
         {/* Input fields */}
-        <div className="input-fields  grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center">
+        {/* i row in small screen and 2 in md and above */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {inputTitle.map((input) => (
-            <div key={input.id} className="w-4/5">
-              <label htmlFor={`#${input.id}`}>{input.name}:</label>
+            <div key={input.id}>
+              <label htmlFor={`#${input.id}`}>{input.label}</label>
+              <br />
+
+              
               <input
                 type="text"
                 name={input.name}
                 id={input.id}
-                className="ml-2 border-2 rounded-lg border-gray-400 px-2"
+                className="border rounded-lg border-gray-400 p-3 w-full mt-1"
                 required
               />
             </div>
@@ -121,7 +142,7 @@ function TransferCert() {
 
         {/* Submit button */}
         <button
-          className="bg-blue-600 text-white px-2 py-1 rounded-lg mx-auto block mt-12"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg ml-auto block mt-12 uppercase tracking-wider font-semibold hover:bg-blue-700 transition-all duration-300 ease-in-out"
           type="submit"
           onClick={handlePreviewClick}
         >
